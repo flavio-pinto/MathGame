@@ -1,2 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using MathGame;
+
 Console.WriteLine("Welcome to Math Game. Have fun!");
