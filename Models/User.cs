@@ -1,13 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace MathGame.Models;
 
 public class User
 {
+    [Key]  // Definisce Id come chiave primaria
     public int Id { get; set; }
-    public string Username { get; set; } = null!;  // oppure = string.Empty;
-    public string PasswordHash { get; set; } = null!;  // oppure = string.Empty;
-    public int Score { get; set; }
+
+    [Required]  // Campo obbligatorio
+    [Column(TypeName = "nvarchar(100)")]
+    public string Username { get; set; } = string.Empty;
+
+    [Required]  // Campo obbligatorio
+    [Column(TypeName = "nvarchar(255)")]
+    public string PasswordHash { get; set; } = string.Empty;
+
+    public int Score { get; set; } = 0;
+
     public ICollection<GameSession> GameSessions { get; set; } = new List<GameSession>();
 
     public string Rank => Score switch

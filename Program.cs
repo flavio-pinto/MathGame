@@ -1,42 +1,42 @@
-﻿using MathGame;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using MathGame.Data;
 using MathGame.Repositories;
 using MathGame.Services.Interfaces;
 using MathGame.Services.Implementations;
+using MathGame.UI;
 
-var host = Host.CreateDefaultBuilder(args)
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureAppConfiguration((context, config) =>
+    {
+        config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true); // ✅ Aggiunto per leggere appsettings.json
+    })
     .ConfigureServices((context, services) =>
     {
-        // Registrazione del DbContext. Qui utilizziamo il metodo OnConfiguring già definito in MathGameContext.
-        services.AddDbContext<MathGameContext>();
+        // Configura il database con Entity Framework
+        services.AddDbContext<MathGameContext>(options =>
+            options.UseSqlServer("Server=localhost;Database=math_game;Trusted_Connection=True;TrustServerCertificate=True;"));
 
-        // Registrazione del repository generico
+        // Configura i repository
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
-        // Registrazione dei servizi di business
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IGameSessionService, GameSessionService>();
         services.AddScoped<IRoundService, RoundService>();
 
-        // Eventuali altre registrazioni (es. logging, configurazioni custom, ecc.)
+        // Configura i menu dell'interfaccia utente
+        services.AddScoped<AuthMenu>();
+        services.AddScoped<GameMenu>();
+        services.AddScoped<SessionMenu>();
+        services.AddScoped<UIManager>();
     })
     .Build();
 
-// Creiamo uno scope per utilizzare i servizi registrati
-using (var scope = host.Services.CreateScope())
+// Avvia l'applicazione
+using (var scope = builder.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
-    // Esempio di recupero e utilizzo di un servizio
-    var userService = services.GetRequiredService<IUserService>();
-
-    // Qui potresti avviare il flusso della tua applicazione,
-    // ad esempio, gestendo login, registrazione, menu interattivi, ecc.
-    // Oppure, se preferisci, puoi passare il controllo a un'apposita classe di orchestrazione.
+    var uiManager = services.GetRequiredService<UIManager>();
+    uiManager.Run();
 }
-
-host.Run();  // Se necessario, oppure termina l'applicazione dopo l'esecuzione del flusso.
