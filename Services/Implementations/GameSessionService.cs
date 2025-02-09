@@ -46,15 +46,30 @@ namespace MathGame.Services.Implementations
         // Termina la sessione di gioco, impostando la data/ora di fine e salvando le modifiche.
         public void EndGameSession(GameSession session)
         {
+            if (session == null) throw new ArgumentNullException(nameof(session));
+
+            // Calcola lo score come il numero di round vinti
+            session.Score = session.Rounds.Count(r => r.IsCorrect);
+
+            // Aggiorna il punteggio totale dell'utente
+            session.User.Score += session.Score;
+
+            // Imposta la data di fine sessione
             session.EndedAt = DateTime.Now;
+
+            // Salva le modifiche
             _gameSessionRepository.Update(session);
+            _userRepository.Update(session.User);
             _gameSessionRepository.Save();
         }
 
-        // Restituisce tutte le sessioni di gioco associate all'utente specificato.
+
         public IEnumerable<GameSession> GetSessionsByUser(int userId)
         {
-            return _gameSessionRepository.GetAll().Where(s => s.UserId == userId);
+            return _gameSessionRepository.GetAll()
+                .Where(gs => gs.UserId == userId)
+                .OrderByDescending(gs => gs.StartedAt) // Ordina dalla più recente alla più vecchia
+                .ToList();
         }
     }
 }

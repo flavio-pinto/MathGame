@@ -7,5 +7,6 @@ public enum GameMenuOption
     Multiplication,
     Division,
     Hardcore,
+    ViewHistory,
     Logout
 }

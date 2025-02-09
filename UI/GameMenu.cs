@@ -22,13 +22,19 @@ namespace MathGame.UI
             {
                 var choice = AnsiConsole.Prompt(
                     new SelectionPrompt<GameMenuOption>()
-                        .Title("[bold]Choose a game mode:[/]")
-                        .AddChoices(Enum.GetValues<GameMenuOption>()));
+                        .Title("[bold]Choose an option:[/]")
+                        .AddChoices(GameMenuOption.Addition, GameMenuOption.Subtraction, GameMenuOption.Multiplication,
+                                    GameMenuOption.Division, GameMenuOption.Hardcore, GameMenuOption.ViewHistory, GameMenuOption.Logout));
 
                 if (choice == GameMenuOption.Logout)
                 {
                     AnsiConsole.MarkupLine("[yellow]Logged out.[/]");
                     return;
+                }
+                else if (choice == GameMenuOption.ViewHistory)
+                {
+                    ViewGameHistory(user);
+                    continue;
                 }
 
                 StartGameSession(user, choice);
@@ -44,6 +50,30 @@ namespace MathGame.UI
 
             _gameSessionService.EndGameSession(session);
             AnsiConsole.MarkupLine("[bold green]Game session completed![/]");
+        }
+
+        private void ViewGameHistory(User user)
+        {
+            var sessions = _gameSessionService.GetSessionsByUser(user.Id);
+
+            if (!sessions.Any()) 
+            {
+                AnsiConsole.MarkupLine("[yellow]No game history found.[/]");
+                return;
+            }
+
+            var table = new Table();
+            table.AddColumn("ID");
+            table.AddColumn("Mode");
+            table.AddColumn("Score");
+            table.AddColumn("Date");
+
+            foreach (var session in sessions)
+            {
+                table.AddRow(session.Id.ToString(), session.Mode.ToString(), session.Score.ToString(), session.StartedAt.ToString("g"));
+            }
+
+            AnsiConsole.Write(table);
         }
     }
 }
