@@ -5,8 +5,8 @@ namespace MathGame.Models;
 public class User
 {
     public int Id { get; set; }
-    public string Username { get; set; }
-    public string PasswordHash { get; set; }
+    public string Username { get; set; } = null!;  // oppure = string.Empty;
+    public string PasswordHash { get; set; } = null!;  // oppure = string.Empty;
     public int Score { get; set; }
     public ICollection<GameSession> GameSessions { get; set; } = new List<GameSession>();
 
@@ -19,6 +19,6 @@ public class User
         int s when s >= 41 && s <= 50 => "Diamond",
         int s when s >= 51 && s <= 60 => "Master",
         int s when s >= 61 => "Grandmaster",
-        _ => "Undefined" // In case the score is outside expected ranges
+        _ => "Undefined"
     };
 }

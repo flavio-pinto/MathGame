@@ -8,7 +8,7 @@ public class GameSession
 {
     public int Id { get; set; }
     public int UserId { get; set; }
-    public User User { get; set; }
+    public User User { get; set; } = null!; // Il null-forgiving operator evita il warning
     public GameMode Mode { get; set; }
     public DateTime StartedAt { get; set; }
     public DateTime? EndedAt { get; set; }
