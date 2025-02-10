@@ -20,6 +20,10 @@ namespace MathGame.UI
         {
             while (true)
             {
+                AnsiConsole.Clear(); // Pulisce la console per una visualizzazione più pulita
+                AnsiConsole.MarkupLine($"[bold green]Welcome, {user.Username}![/] [yellow](Rank: {user.Rank})[/]");
+                AnsiConsole.MarkupLine("[bold]Choose a game mode:[/]");
+
                 var choice = AnsiConsole.Prompt(
                     new SelectionPrompt<GameMenuOption>()
                         .Title("[bold]Choose an option:[/]")
@@ -45,11 +49,19 @@ namespace MathGame.UI
         {
             var gameMode = Enum.Parse<GameMode>(mode.ToString());
             var session = _gameSessionService.CreateGameSession(user.Id, gameMode);
+            var currentRank = user.Rank;
 
             _sessionMenu.PlaySession(session);
-
             _gameSessionService.EndGameSession(session);
-            AnsiConsole.MarkupLine("[bold green]Game session completed![/]");
+
+            // Mostra il nuovo rank dopo aver aggiornato il punteggio
+            if(user.Rank != currentRank)
+            {
+                AnsiConsole.MarkupLine($"[bold green]Congratulations! You've reached rank {user.Rank}![/]");
+            }
+
+            AnsiConsole.MarkupLine($"[bold green]Game session completed![/]");
+            Console.ReadKey();
         }
 
         private void ViewGameHistory(User user)
