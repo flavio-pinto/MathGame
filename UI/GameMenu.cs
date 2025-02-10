@@ -55,14 +55,18 @@ namespace MathGame.UI
             _gameSessionService.EndGameSession(session);
 
             // Mostra il nuovo rank dopo aver aggiornato il punteggio
-            if(user.Rank != currentRank)
+            if (user.Rank != currentRank)
             {
-                AnsiConsole.MarkupLine($"[bold green]Congratulations! You've reached rank {user.Rank}![/]");
+                AnsiConsole.MarkupLine($"[bold green]🎉 Congratulations! You've reached rank [yellow]{user.Rank}[/]! 🎉[/]");
+                AnsiConsole.MarkupLine("[bold white]Press any key to continue...[/]");
+                Console.ReadKey(); // Pausa per far leggere il messaggio
             }
 
             AnsiConsole.MarkupLine($"[bold green]Game session completed![/]");
+            AnsiConsole.MarkupLine("[bold white]Press any key to return to the menu...[/]");
             Console.ReadKey();
         }
+
 
         private void ViewGameHistory(User user)
         {
