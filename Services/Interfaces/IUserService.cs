@@ -12,5 +12,8 @@ namespace MathGame.Services.Interfaces
 
         // Retrieves a user by its unique identifier.
         User? GetUserById(int id);
+
+        // Retrieves users ranked by their rank
+        IEnumerable<User> GetLeaderboard();
     }
 }

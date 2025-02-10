@@ -70,5 +70,14 @@ namespace MathGame.Services.Implementations
             // A scopo didattico, eseguiamo un confronto semplice.
             return inputPassword == storedHash;
         }
+
+        // Restituisce la classifica degli utenti ordinata per punteggio e rank
+        public IEnumerable<User> GetLeaderboard()
+        {
+            return _userRepository.GetAll()
+                .OrderByDescending(u => u.Score) // Ordina per punteggio decrescente
+                .ThenByDescending(u => u.Rank)   // Se due utenti hanno lo stesso score, ordina per rank
+                .ToList();
+        }
     }
 }

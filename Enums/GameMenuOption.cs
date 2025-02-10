@@ -8,5 +8,6 @@ public enum GameMenuOption
     Division,
     Hardcore,
     ViewHistory,
+    ViewLeaderboard,
     Logout
 }
