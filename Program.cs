@@ -7,6 +7,7 @@ using MathGame.Repositories;
 using MathGame.Services.Interfaces;
 using MathGame.Services.Implementations;
 using MathGame.UI;
+using MathGame.Seeding;
 
 var builder = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((context, config) =>
@@ -37,6 +38,14 @@ var builder = Host.CreateDefaultBuilder(args)
 using (var scope = builder.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
+
+    // Ottieni il contesto del database
+    var dbContext = services.GetRequiredService<MathGameContext>();
+
+    // ✅ Esegui il seeding dei dati fake
+    DatabaseSeeder.SeedDatabase(dbContext);
+
+    // Avvia il menu UIManager
     var uiManager = services.GetRequiredService<UIManager>();
     uiManager.Run();
 }
