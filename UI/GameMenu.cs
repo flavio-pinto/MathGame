@@ -83,9 +83,11 @@ namespace MathGame.UI
         {
             var sessions = _gameSessionService.GetSessionsByUser(user.Id);
 
-            if (!sessions.Any()) 
+            if (!sessions.Any())
             {
                 AnsiConsole.MarkupLine("[yellow]No game history found.[/]");
+                AnsiConsole.MarkupLine("[bold white]Press any key to return...[/]");
+                Console.ReadKey();
                 return;
             }
 
@@ -104,6 +106,7 @@ namespace MathGame.UI
             AnsiConsole.MarkupLine("[bold white]Press any key to return...[/]");
             Console.ReadKey();
         }
+
 
         private void ViewLeaderboard()
         {
