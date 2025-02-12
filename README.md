@@ -128,7 +128,7 @@ Durante il gioco, il punteggio accumulato permette di scalare la classifica e mi
 
 ## 📜 Licenza
 Questo progetto è distribuito sotto licenza **MIT**.  
-Creato da **Flavio** per scopi didattici. 🎓💻  
+Creato da **Flavio**. 🎓💻  
 
 ---
 
