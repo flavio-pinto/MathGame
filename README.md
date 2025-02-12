@@ -26,7 +26,7 @@ cd mathgame
 
 ### 2️⃣ Configura il database
 - Assicurati di avere **SQL Server** installato  
-- Modifica il file **`appsettings.json`** e imposta la stringa di connessione, ad esempio:
+- Modifica il Context impostando la tua stringa di connessione, ad esempio:
 ```json
 {
   "ConnectionStrings": {
