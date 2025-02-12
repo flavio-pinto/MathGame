@@ -15,7 +15,7 @@ namespace MathGame.UI
             _gameMenu = gameMenu;
         }
 
-        public async Task Run() // 👈 Reso async
+        public async Task Run()
         {
             while (true)
             {
@@ -30,7 +30,7 @@ namespace MathGame.UI
                         _authMenu.RegisterUser();
                         break;
                     case MainMenuOption.Login:
-                        await _authMenu.LoginUser(); // 👈 Aggiunto await
+                        await _authMenu.LoginUser();
                         break;
                     case MainMenuOption.Exit:
                         return;

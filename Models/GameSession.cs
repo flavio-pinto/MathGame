@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MathGame.Enums; // Assume this namespace contains the GameMode enum
+using MathGame.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

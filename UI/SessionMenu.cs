@@ -40,7 +40,6 @@ namespace MathGame.UI
         {
             var round = _roundService.CreateRound(sessionId, roundNumber);
 
-            // ✅ Mostra prima l'operazione da risolvere
             Console.WriteLine($"{round.Number1} {GetOperatorSymbol(round.Operation)} {round.Number2} = ?");
 
             Console.WriteLine($"🎤 Rispondi con la voce? (y/n)");
@@ -62,7 +61,7 @@ namespace MathGame.UI
                     return;
                 }
 
-                // 🔄 Converti la risposta vocale in numero
+                // Converte la risposta vocale in numero
                 int? convertedNumber = NumberConverter.ConvertWordToNumber(response);
                 if (convertedNumber.HasValue)
                 {
@@ -71,7 +70,7 @@ namespace MathGame.UI
             }
             else
             {
-                Console.Write("✏️ Digita la tua risposta: "); // ✅ Feedback visivo per input manuale
+                Console.Write("✏️ Digita la tua risposta: "); // Feedback visivo per richiedere l'input manuale
                 response = Console.ReadLine() ?? string.Empty;
             }
 

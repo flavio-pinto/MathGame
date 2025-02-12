@@ -9,14 +9,14 @@ namespace MathGame.Seeding
     {
         public static void SeedDatabase(MathGameContext context)
         {
-            if (context.Users.Any()) return; // ✅ Evita duplicati
+            if (context.Users.Any()) return; // Evita duplicati
 
             var userFaker = new Faker<User>()
                 .RuleFor(u => u.Username, f => f.Internet.UserName())
-                .RuleFor(u => u.PasswordHash, (f, u) => u.Username) // ✅ Password = Username
-                .RuleFor(u => u.Score, 0); // Inizialmente 0, poi lo aggiorniamo
+                .RuleFor(u => u.PasswordHash, (f, u) => u.Username) // Per semplicità di testing Password = Username
+                .RuleFor(u => u.Score, 0); 
 
-            var users = userFaker.Generate(10); // ✅ Genera 10 utenti fake
+            var users = userFaker.Generate(10); // Genera 10 utenti fake
 
             context.Users.AddRange(users);
             context.SaveChanges();
@@ -38,7 +38,7 @@ namespace MathGame.Seeding
 
                 foreach (var session in sessions)
                 {
-                    var roundCount = session.Mode == GameMode.Hardcore ? 20 : 5; // ✅ Hardcore ha 20 round
+                    var roundCount = session.Mode == GameMode.Hardcore ? 20 : 5; // Hardcore ha 20 round
 
                     var roundFaker = new Faker<Round>()
                         .RuleFor(r => r.GameSessionId, session.Id)
@@ -64,7 +64,7 @@ namespace MathGame.Seeding
                     context.Rounds.AddRange(rounds);
                 }
 
-                // ✅ Aggiorna lo score totale dell'utente in base alle sue partite
+                // Aggiorna lo score totale dell'utente in base alle sue partite
                 user.Score = context.GameSessions
                     .Where(gs => gs.UserId == user.Id)
                     .Sum(gs => gs.Score);

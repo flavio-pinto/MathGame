@@ -4,12 +4,10 @@ namespace MathGame.Services.Interfaces
 {
     public interface IRoundService
     {
-        // Initializes a new round for a given game session.
+        // Inizia un nuovo round per la sessione di gioco specificata.
         Round CreateRound(int gameSessionId, int roundNumber);
 
-        // Validates the user's answer for a given round, updating the round's state.
+        // Valida la risposta dell'utente per il round specificato, aggiornando lo stato del round.
         bool ValidateAnswer(Round round, int userAnswer);
-
-        // Optionally, other methods specific to round management can be added here.
     }
 }

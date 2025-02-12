@@ -35,7 +35,6 @@ namespace MathGame.Services.Implementations
             Console.WriteLine($"📝 Trascrizione ottenuta: '{transcription}'"); // 👈 Verifica cosa viene trascritto
 
             File.Delete(filePath); // Cancella il file dopo l'uso
-            Console.WriteLine("trascrizione", transcription);
             return transcription;
         }
 
@@ -77,10 +76,6 @@ namespace MathGame.Services.Implementations
                 recognizer.AcceptWaveform(buffer, bytesRead);
             }
 
-            // 🔍 Debug: Stampiamo il JSON intero restituito da Vosk
-            string rawJson = recognizer.FinalResult();
-            Console.WriteLine($"🔍 JSON ricevuto da Vosk: {rawJson}");
-
             // **Estrai il testo dal JSON**
             string textResult = ExtractTranscription(rawJson);
 
@@ -98,8 +93,6 @@ namespace MathGame.Services.Implementations
 
         private string ExtractTranscription(string jsonResult)
         {
-            Console.WriteLine($"🔍 JSON ricevuto: {jsonResult}"); // ✅ Stampa per debug
-
             try
             {
                 if (string.IsNullOrWhiteSpace(jsonResult))

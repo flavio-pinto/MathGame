@@ -14,7 +14,7 @@ namespace MathGame.UI
         public GameMenu(IGameSessionService gameSessionService, IUserService userService, SessionMenu sessionMenu)
         {
             _gameSessionService = gameSessionService ?? throw new ArgumentNullException(nameof(gameSessionService));
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService));  // ✅ Controllo di null
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
             _sessionMenu = sessionMenu ?? throw new ArgumentNullException(nameof(sessionMenu));
         }
 

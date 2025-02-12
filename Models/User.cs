@@ -9,11 +9,11 @@ public class User
     [Key]  // Definisce Id come chiave primaria
     public int Id { get; set; }
 
-    [Required]  // Campo obbligatorio
+    [Required]
     [Column(TypeName = "nvarchar(100)")]
     public string Username { get; set; } = string.Empty;
 
-    [Required]  // Campo obbligatorio
+    [Required]
     [Column(TypeName = "nvarchar(255)")]
     public string PasswordHash { get; set; } = string.Empty;
 

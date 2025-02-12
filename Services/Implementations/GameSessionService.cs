@@ -11,18 +11,18 @@ namespace MathGame.Services.Implementations
     public class GameSessionService : IGameSessionService
     {
         private readonly IRepository<GameSession> _gameSessionRepository;
-        private readonly IRepository<User> _userRepository; // ✅ AGGIUNTO
+        private readonly IRepository<User> _userRepository;
 
         public GameSessionService(IRepository<GameSession> gameSessionRepository, IRepository<User> userRepository)
         {
             _gameSessionRepository = gameSessionRepository;
-            _userRepository = userRepository; // ✅ AGGIUNTO
+            _userRepository = userRepository;
         }
 
         // Crea una nuova sessione di gioco per l'utente specificato e per la modalità indicata.
         public GameSession CreateGameSession(int userId, GameMode mode)
         {
-            var user = _userRepository.GetById(userId); // ✅ Ora il repository è disponibile
+            var user = _userRepository.GetById(userId);
             if (user == null)
             {
                 throw new Exception("User not found.");
@@ -31,7 +31,7 @@ namespace MathGame.Services.Implementations
             var session = new GameSession
             {
                 UserId = userId,
-                User = user,  // ✅ Corretto: assegniamo l'utente richiesto
+                User = user,
                 Mode = mode,
                 StartedAt = DateTime.Now,
                 Score = 0
