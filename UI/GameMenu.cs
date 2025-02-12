@@ -18,7 +18,7 @@ namespace MathGame.UI
             _sessionMenu = sessionMenu ?? throw new ArgumentNullException(nameof(sessionMenu));
         }
 
-        public void ShowGameMenu(User user)
+        public async Task ShowGameMenu(User user)
         {
             while (true)
             {
@@ -49,20 +49,20 @@ namespace MathGame.UI
                         continue;
 
                     default:
-                        StartGameSession(user, choice);
+                        await StartGameSession(user, choice);
                         break;
                 }
             }
         }
 
 
-        private void StartGameSession(User user, GameMenuOption mode)
+        private async Task StartGameSession(User user, GameMenuOption mode)
         {
             var gameMode = Enum.Parse<GameMode>(mode.ToString());
             var session = _gameSessionService.CreateGameSession(user.Id, gameMode);
             var currentRank = user.Rank;
 
-            _sessionMenu.PlaySession(session);
+            await _sessionMenu.PlaySession(session);
             _gameSessionService.EndGameSession(session);
 
             // Mostra il nuovo rank dopo aver aggiornato il punteggio

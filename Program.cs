@@ -31,11 +31,12 @@ var builder = Host.CreateDefaultBuilder(args)
         services.AddScoped<GameMenu>();
         services.AddScoped<SessionMenu>();
         services.AddScoped<UIManager>();
+        services.AddSingleton<VoskSpeechRecognitionService>();
     })
     .Build();
 
 // Avvia l'applicazione
-using (var scope = builder.Services.CreateScope())
+await using (var scope = builder.Services.CreateAsyncScope()) // 👈 Usa CreateAsyncScope()
 {
     var services = scope.ServiceProvider;
 
@@ -47,5 +48,5 @@ using (var scope = builder.Services.CreateScope())
 
     // Avvia il menu UIManager
     var uiManager = services.GetRequiredService<UIManager>();
-    uiManager.Run();
+    await uiManager.Run(); // ✅ Ora funziona correttamente
 }

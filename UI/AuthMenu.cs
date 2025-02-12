@@ -33,7 +33,7 @@ namespace MathGame.UI
             }
         }
 
-        public void LoginUser()
+        public async Task LoginUser()
         {
             AnsiConsole.MarkupLine("[bold cyan]Login[/]");
             string username = AnsiConsole.Ask<string>("Enter username:");
@@ -44,7 +44,7 @@ namespace MathGame.UI
             {
                 _loggedInUser = user;
                 AnsiConsole.MarkupLine("[green]Login successful![/]");
-                _gameMenu.ShowGameMenu(_loggedInUser);
+                await _gameMenu.ShowGameMenu(_loggedInUser);
             }
             else
             {
