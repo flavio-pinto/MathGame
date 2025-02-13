@@ -76,6 +76,9 @@ namespace MathGame.Services.Implementations
                 recognizer.AcceptWaveform(buffer, bytesRead);
             }
 
+            // Recupera il JSON trascritto
+            string rawJson = recognizer.FinalResult();
+
             // **Estrai il testo dal JSON**
             string textResult = ExtractTranscription(rawJson);
 
